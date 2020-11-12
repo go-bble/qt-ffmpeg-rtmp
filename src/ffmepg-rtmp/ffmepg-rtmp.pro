@@ -29,8 +29,18 @@ CONFIG(debug, debug|release){
 }else{
     DESTDIR = $$PWD/../../bin
 }
+
 # Default rules for deployment.
 unix:!macx|win32: LIBS += -L$$PWD/../../lib/ -lavcodec
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
+
+INCLUDEPATH += $$PWD/../../include
+DEPENDPATH += $$PWD/../../include
+
+unix|win32: LIBS += -L$$PWD/../../lib/ -lavformat -lavutil
+#win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../lib/avformat.lib
+
